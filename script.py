@@ -1093,47 +1093,6 @@ The **consensus among most experts** is that if **90%+** of the results of an on
                 "The raising canes trip"
             ]))
 
-        if args[0] == "7ball":
-            await message.reply("🎱 " + random.choice([
-                "Fuck you",
-                "I hate you <3",
-                "jerpler is gay",
-                "I see you in your sleep",
-                "https://cdn.discordapp.com/attachments/1299528878636797952/1382053491824136393/Video-41.mp4?ex=6849c11d&is=68486f9d&hm=707082e364235bb40883cd8f40c7023cbdc4fef5de06946755d4b08757af2316&",
-                "Go into a best buy and ask again later",
-                "I have 16 pimples",
-                "Bri'ish 😍",
-                "Send this to your special somepony",
-                "They itch...",
-                "Bando likes to be rage baited, dont listen to him",
-                "Go onto the short bus",
-                "<https://open.spotify.com/track/4hx9RvP93j79EJLAiyJQoI?si=a891854dc4464afd>",
-                "peppertwink",
-                "Steven here...",
-                "Back of the cronic",
-                "https://cdn.discordapp.com/attachments/1262981175245406340/1382058649135878256/deku.mp4?ex=6849c5eb&is=6848746b&hm=8657d2f6bdfdad0e2d43b82c2c30cd04bfb59c69d11eb6946cf9d0ec0a88fa7e&",
-                "Dont listen to bando, he likes to be rage baited :3",
-                "Bring death to a beat",
-                "show us your autism score <https://www.clinical-partners.co.uk/for-adults/autism-and-aspergers/adult-autism-test>",
-                "Dantussy",
-                "https://cdn.discordapp.com/attachments/1262981175245406340/1382059243527475230/jesus.mp4?ex=6849c679&is=684874f9&hm=ad35090d7a2ea6d6be5ab8d38d1d7315e36a53ad3b6d098051fed3de689d86b3&",
-                "To be fair, you have to have a very high IQ to understand Rick and Morty.",
-                "<https://www.youtube.com/shorts/gxr1e5j2LCo>",
-                "Enjoy the next 45 minutes...",
-                "https://tenor.com/view/meme-cringe-shadow-the-hedgehog-heart-weird-gif-7710246342283618320",
-                "accept of decline... https://cdn.discordapp.com/attachments/1170093288989147329/1381188353243742258/attachment.gif?ex=684a8fe4&is=68493e64&hm=cb4fa98d7892faa6844331f23e1fbd37ac201316a0cbf62a1119050c4a5cfb5f",
-                "this is the piss off reflect response, piss him off",
-                "my water is breaking💦💦💦",
-                "_ _",
-                "https://cdn.discordapp.com/attachments/1170093288989147329/1339062356767936562/attachment.gif?ex=684d88c0&is=684c3740&hm=5c06f791ab39de0707da9673896bac07b273a83cc83ad53afb88b8481f2ec44b&",
-                "If I had a nickel,",
-                "https://tenor.com/view/grinch-twerk-gif-15485142147788234130",
-                "Reflect is a bitch",
-                "<https://open.spotify.com/track/54bm2e3tk8cliUz3VSdCPZ?si=0928d70f9b2b4c1f>",
-                "This is how you cut a xan cake.",
-                "https://cdn.discordapp.com/attachments/1295485696429133877/1383170381686509568/ganster.mp4?ex=684dd14d&is=684c7fcd&hm=bd4b7a3f2b162e51b327c8fb7e52a0dfecd2cfc886b130a758e5725d0f92ead5&"
-            ]))
-
         if args[0] == "8ball":
             await message.reply("🎱 " + random.choice([
                 "It is certain.",
@@ -1328,6 +1287,10 @@ The **consensus among most experts** is that if **90%+** of the results of an on
             loltimer = time.time()
             coolmsg = await message.reply("Ponging hold on")
             await coolmsg.edit(content="Pong at `"+str(round((time.time()-loltimer)*1000))+"ms`")
+
+        if args[0] == "generateimage":
+            generate_image(' '.join(args[1:]), "generateimage.png")
+            await message.reply(file=discord.File("generateimage.png"))
         
         if args[0] == "yapper":
             first = client.get_user(int(get_userid_by_place(1)))
@@ -1615,7 +1578,6 @@ async def handleCommand(message):
 `elapsedtime` Shows how long bot has been up
 `yn *[message]` Starts a yes/no poll
 `wavyball` Returns an wavy response
-`7ball` Returns an 7 ball response (insults you)
 `8ball` Returns an 8 ball response
 `9ball` Returns a stupider 8 ball response
 `coinflip` Flip a coin, see what it lands
@@ -1932,47 +1894,6 @@ Content
                 "Haiiiiiii :3",
                 "I love IHOP",
                 "The raising canes trip"
-            ]))
-
-        if args[0] == "7ball":
-            await message.reply("🎱 " + random.choice([
-                "Fuck you",
-                "I hate you <3",
-                "jerpler is gay",
-                "I see you in your sleep",
-                "https://cdn.discordapp.com/attachments/1299528878636797952/1382053491824136393/Video-41.mp4?ex=6849c11d&is=68486f9d&hm=707082e364235bb40883cd8f40c7023cbdc4fef5de06946755d4b08757af2316&",
-                "Go into a best buy and ask again later",
-                "I have 16 pimples",
-                "Bri'ish 😍",
-                "Send this to your special somepony",
-                "They itch...",
-                "Bando likes to be rage baited, dont listen to him",
-                "Go onto the short bus",
-                "<https://open.spotify.com/track/4hx9RvP93j79EJLAiyJQoI?si=a891854dc4464afd>",
-                "peppertwink",
-                "Steven here...",
-                "Back of the cronic",
-                "https://cdn.discordapp.com/attachments/1262981175245406340/1382058649135878256/deku.mp4?ex=6849c5eb&is=6848746b&hm=8657d2f6bdfdad0e2d43b82c2c30cd04bfb59c69d11eb6946cf9d0ec0a88fa7e&",
-                "Dont listen to bando, he likes to be rage baited :3",
-                "Bring death to a beat",
-                "show us your autism score <https://www.clinical-partners.co.uk/for-adults/autism-and-aspergers/adult-autism-test>",
-                "Dantussy",
-                "https://cdn.discordapp.com/attachments/1262981175245406340/1382059243527475230/jesus.mp4?ex=6849c679&is=684874f9&hm=ad35090d7a2ea6d6be5ab8d38d1d7315e36a53ad3b6d098051fed3de689d86b3&",
-                "To be fair, you have to have a very high IQ to understand Rick and Morty.",
-                "<https://www.youtube.com/shorts/gxr1e5j2LCo>",
-                "Enjoy the next 45 minutes...",
-                "https://tenor.com/view/meme-cringe-shadow-the-hedgehog-heart-weird-gif-7710246342283618320",
-                "accept of decline... https://cdn.discordapp.com/attachments/1170093288989147329/1381188353243742258/attachment.gif?ex=684a8fe4&is=68493e64&hm=cb4fa98d7892faa6844331f23e1fbd37ac201316a0cbf62a1119050c4a5cfb5f",
-                "this is the piss off reflect response, piss him off",
-                "my water is breaking💦💦💦",
-                "_ _",
-                "https://cdn.discordapp.com/attachments/1170093288989147329/1339062356767936562/attachment.gif?ex=684d88c0&is=684c3740&hm=5c06f791ab39de0707da9673896bac07b273a83cc83ad53afb88b8481f2ec44b&",
-                "If I had a nickel,",
-                "https://tenor.com/view/grinch-twerk-gif-15485142147788234130",
-                "Reflect is a bitch",
-                "<https://open.spotify.com/track/54bm2e3tk8cliUz3VSdCPZ?si=0928d70f9b2b4c1f>",
-                "This is how you cut a xan cake.",
-                "https://cdn.discordapp.com/attachments/1295485696429133877/1383170381686509568/ganster.mp4?ex=684dd14d&is=684c7fcd&hm=bd4b7a3f2b162e51b327c8fb7e52a0dfecd2cfc886b130a758e5725d0f92ead5&"
             ]))
 
         if args[0] == "8ball":
@@ -2774,6 +2695,10 @@ The **consensus among most experts** is that if **90%+** of the results of an on
             loltimer = time.time()
             coolmsg = await message.reply("Ponging hold on")
             await coolmsg.edit(content="Pong at `"+str(round((time.time()-loltimer)*1000))+"ms`")
+
+        if args[0] == "generateimage":
+            generate_image(' '.join(args[1:]), "generateimage.png")
+            await message.reply(file=discord.File("generateimage.png"))
 
         if args[0] == "gamble":
             symbols = ['🍒', '🍋', '🍊', '🍉']
@@ -3770,6 +3695,38 @@ def parse_time(time_str):
             except ValueError:
                 return None
     return None
+
+from PIL import Image, ImageDraw, ImageFont
+
+def generate_image(text, output_path="output.png"):
+    img_size = (512, 512)
+
+    img = Image.new("RGB", img_size, color="black")
+    draw = ImageDraw.Draw(img)
+
+    try:
+        font = ImageFont.truetype("arialbd.ttf", size=10)
+    except:
+        raise FileNotFoundError("Arial Bold font not found. Install 'arialbd.ttf' or specify path.")
+
+    font_size = 10
+    while True:
+        test_font = ImageFont.truetype("arialbd.ttf", font_size)
+        bbox = draw.textbbox((0, 0), text, font=test_font)
+        text_w, text_h = bbox[2] - bbox[0], bbox[3] - bbox[1]
+        if text_w >= img_size[0] * 0.9 or text_h >= img_size[1] * 0.9:
+            break
+        font_size += 2
+    font = ImageFont.truetype("arialbd.ttf", font_size)
+
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_w, text_h = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    position = ((img_size[0] - text_w) // 2, (img_size[1] - text_h) // 2)
+
+    draw.text(position, text, font=font, fill="white")
+
+    img.save(output_path)
+    print(f"Image saved at {output_path}")
 
 def send_discord_webhook(webhook_url, message, embed):
     data = {
