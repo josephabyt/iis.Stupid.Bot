@@ -440,37 +440,6 @@ async def on_message(message):
                     
                 await ProcessAntiDoxx(message)
 
-                if message.channel.id == 1170852733633441792: # post-mods
-                    if len(message.attachments) == 0:
-                        await handle_non_attachment_message(message)
-                    else:
-                        dll_attachments = [attachment for attachment in message.attachments if attachment.filename.lower().endswith('.dll')]
-                        if not dll_attachments:
-                            await handle_non_attachment_message(message)
-                        else:
-                            for attachment in message.attachments:
-                                if attachment.size > 3145728:
-                                    await message.delete()
-                                    await message.author.timeout(timedelta(days=1), reason = "Post-mods shenanegins")
-                                    await message.author.send("Your message was deleted because a mod was over 3MB in size: "+attachment.filename)
-                                    print("Message deleted for filesize")
-                                    return
-
-                                if attachment.size < 2048:
-                                    await message.delete()
-                                    await message.author.timeout(timedelta(days=1), reason = "Post-mods shenanegins")
-                                    await message.author.send("Your message was deleted because a mod was under 2KB in size: "+attachment.filename)
-                                    print("Message deleted for filesize")
-                                    return
-
-                                for badmod in blacklisted_mods:
-                                    if badmod in attachment.filename.lower():
-                                        await message.delete()
-                                        await message.author.timeout(timedelta(days=1), reason = "Post-mods shenanegins")
-                                        await message.author.send("Your message was deleted because it contained a blacklisted mod: "+attachment.filename)
-                                        print("Message deleted for blacklisted")
-                                        return
-                
                 try:
                     dll_attachments = [attachment for attachment in message.attachments if attachment.filename.lower().endswith('.dll')]
                     if dll_attachments:
@@ -695,28 +664,6 @@ async def on_message_edit(oldmessage, message): # this is the EDIT
                             lastTimeRepliedDM = time.time() + 15
                     
                 await ProcessAntiDoxx(message)
-
-                if message.channel.id == 1170852733633441792: # post-mods
-                    if len(message.attachments) == 0:
-                        await handle_non_attachment_message(message)
-                    else:
-                        dll_attachments = [attachment for attachment in message.attachments if attachment.filename.lower().endswith('.dll')]
-                        if not dll_attachments:
-                            await handle_non_attachment_message(message)
-                        else:
-                            for attachment in message.attachments:
-                                for badmod in blacklisted_mods:
-                                    if badmod in attachment.filename.lower():
-                                        await message.delete()
-                                        await message.author.timeout(timedelta(days=1), reason = "Post-mods shenanegins")
-                                        await message.author.send("Your message was deleted because it contained a blacklisted mod: "+attachment.filename)
-                                        print("Message deleted for blacklisted")
-                                    else:
-                                        if attachment.size > 3145728:
-                                            await message.delete()
-                                            await message.author.timeout(timedelta(days=1), reason = "Post-mods shenanegins")
-                                            await message.author.send("Your message was deleted because a mod was over 3MB in size: "+attachment.filename)
-                                            print("Message deleted for filesize")
                 
                 if message.channel.id == 1170852764725805148: # post-code
                     if len(message.attachments) == 0:
