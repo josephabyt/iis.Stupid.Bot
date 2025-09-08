@@ -1212,8 +1212,6 @@ The **consensus among most experts** is that if **90%+** of the results of an on
         
         if args[0] == "gamble":
             if message.channel.id == 1170550524110721176:
-                await message.reply("The gamble command has been temporarily disabled")
-                """
                 symbols = ['🍒', '🍋', '🍊', '🍉']
                 probabilities = [0.06, 0.32, 0.31, 0.31]
 
@@ -1226,7 +1224,6 @@ The **consensus among most experts** is that if **90%+** of the results of an on
                     await msgth.reply("NOW THAT'S WHAT I'M TALKING ABOUT BABY")
                     earole = client.guilds[0].get_role(1201252667322806372)
                     await message.author.add_roles(earole)
-                """
             else:
                 await message.reply("The gamble command is only allowed in <#1170550524110721176>")
         
