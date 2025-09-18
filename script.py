@@ -961,7 +961,7 @@ The **consensus among most experts** is that if **90%+** of the results of an on
             await message.reply("Bot has been online for `" + elapsed_time_ms + "ms`")
         
         if args[0] == "console": 
-            if any(role.id == 1265059882697101428 for role in message.author.roles):
+            if any(role.id == 1418055219559923732 for role in message.author.roles):
                 await handleConsole(message, args)
             else:
                 await message.reply("Permission denied")
@@ -2098,7 +2098,7 @@ Content
             await message.reply(translate(args[1], fix))
 
         if args[0] == "console":
-            if any(role.id == 1265059882697101428 for role in message.author.roles):
+            if any(role.id == 1418055219559923732 for role in message.author.roles):
                 await handleConsole(message, args)
             else:
                 await message.reply("Permission denied")
