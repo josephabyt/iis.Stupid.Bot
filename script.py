@@ -30,9 +30,8 @@ from datetime import timedelta, datetime, timezone
 TOKEN = ''
 privwhurl = ''
 authenticationkey = ''
-ADMINROLES = [1177487180453646387, 1170116321388810411, 1170116220855537754, 1170863596100657283, 1207131095834038343] # 1344743401509228702 is Crimson remove later maybe
+ADMINROLES = [1177487180453646387, 1170116321388810411, 1170116220855537754, 1170863596100657283, 1207131095834038343]
 SHITPINGPROTECTED = [1170863596100657283, 1237953269930917959, 1200174270819598478, 1170858334878965791]
-CONSOLE_PERMISSIONS = [738573735895892050, 894348631904223232, 1340165954981724255, 252548095244500994, 909144448087240765, 972926959971627049, 1353949181571633173, 1265059882697101428]
 SHITPOSTS = [""]
 AUTOIDS = []
 REMOVALIDS = []
@@ -961,8 +960,8 @@ The **consensus among most experts** is that if **90%+** of the results of an on
             elapsed_time_ms = math.floor((time.time() - start_time) * 1000)
             await message.reply("Bot has been online for `" + elapsed_time_ms + "ms`")
         
-        if args[0] == "console" and message.author.id in CONSOLE_PERMISSIONS: 
-            if message.author.id in CONSOLE_PERMISSIONS:
+        if args[0] == "console": 
+            if any(role.id == 1265059882697101428 for role in message.author.roles):
                 await handleConsole(message, args)
             else:
                 await message.reply("Permission denied")
@@ -2098,8 +2097,8 @@ Content
             fix = ' '.join(args[2:])
             await message.reply(translate(args[1], fix))
 
-        if args[0] == "console" and message.author.id in CONSOLE_PERMISSIONS:
-            if message.author.id in CONSOLE_PERMISSIONS:
+        if args[0] == "console":
+            if any(role.id == 1265059882697101428 for role in message.author.roles):
                 await handleConsole(message, args)
             else:
                 await message.reply("Permission denied")
