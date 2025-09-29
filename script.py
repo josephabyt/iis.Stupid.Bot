@@ -2103,6 +2103,20 @@ Content
             else:
                 await message.reply("Permission denied")
 
+        if args[0] == "setpoll" and message.author.id == ownerUID:
+            fix = ' '.join(args[1:])
+            data = fix.split(";")
+
+            url = "https://iidk.online/setpoll"
+            body = {"key": authenticationkey, "poll": data[0], "a": data[1], "b": data[2]}
+            
+            response = requests.post(url, json=body, timeout=5)
+            if response.status_code == 200:
+                message.reply("I did it are you proud of me")
+            else:
+                print(f"Failed to pollify: {response.status_code}")
+                message.reply("Yeah fuck you")
+
         if args[0] == "blacklist" and message.author.id == ownerUID:
             await handleBlacklist(message, args)
         
@@ -2880,98 +2894,56 @@ The **consensus among most experts** is that if **90%+** of the results of an on
         """
 
 async def handleConsole(message, args):
-    github_token = "nul"
-    try:
-        with open("github_pat.txt", 'r') as file:
-            github_token = file.read().strip() 
-    except FileNotFoundError:
-        message.reply("Github PAT not found")
-        return
+    await client.get_channel(1202085222632390686).send("Bot console " + str(message.content) + " by " + str(message.author.id) + " -- " + str(message.author.name))
 
-    url = "https://api.github.com/repos/iiDk-the-actual/ModInfo/contents/iiMenu_ServerData.txt"
+    if args[1] == "add_admin":
+        name = message.author.name
+        if len(args) > 3:
+            name = args[3]
 
-    response = requests.get(url, headers={"Authorization": f"token {github_token}"}, timeout=5)
-
-    if response.status_code == 200:
-        file_data = response.json()
-        modifiedAdmins = False
-        content = base64.b64decode(file_data['content']).decode('utf-8')
-        data = content.splitlines()
-
-        if len(data) > 1:
-            if args[1] == "add_admin":
-                id_exists = any(entry.startswith(args[2] + ";") for entry in data[1].split(','))
-                if id_exists:
-                    await message.reply("ID already in admin list")
-                    return
-
-                if len(args) > 3:
-                    data[1] += "," + args[2] + ";" + args[3]
-                else:
-                    data[1] += "," + args[2] + ";" + message.author.name
-
-                modifiedAdmins = True
-                commit_message = f"UID {message.author.id} added ID to admin list"
-
-            elif args[1] == "remove_admin":
-                if len(args) > 2:
-                    id_to_remove = args[2]
-                    entries = data[1].split(',')
-                    updated_entries = [
-                        entry for entry in entries if not entry.startswith(id_to_remove + ";")
-                    ]
-                    if len(updated_entries) < len(entries):
-                        data[1] = ",".join(updated_entries)
-                        commit_message = f"UID {message.author.id} removed ID {id_to_remove} from admin list"
-                        modifiedAdmins = True
-                    else:
-                        await message.reply("ID not found in the admin list")
-                        return
-                else:
-                    await message.reply("Please provide an ID to remove")
-                    return
-            
-            elif args[1] == "get_admin":
-                if len(args) > 2:
-                    name_to_search = args[2].lower()
-                    entries = data[1].split(',')
-                    matching_entries = [entry for entry in entries if entry.split(';')[1].lower() == name_to_search]
-                    
-                    if matching_entries:
-                        ids = [entry.split(';')[0] for entry in matching_entries]
-                        await message.reply(f"{name_to_search} has {len(ids)} account(s): {', '.join(ids)}")
-                    else:
-                        await message.reply(f"No accounts found for {name_to_search}")
-                    return
-                else:
-                    await message.reply("Please provide a name to search for")
-                    return
-
-            else:
-                await message.reply("Invalid command")
-                return
-
-            if modifiedAdmins:
-                updated_content = "\n".join(data)
-                encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
-
-                payload = {
-                    "message": commit_message,
-                    "content": encoded_content,
-                    "sha": file_data['sha'],
-                    "branch": "main"
-                }
-
-                update_response = requests.put(url, headers={"Authorization": f"token {github_token}"}, json=payload, timeout=5)
-
-                if update_response.status_code == 200:
-                    await message.reply("File updated successfully")
-                else:
-                    await message.reply(f"Failed to update file; code {update_response.status_code}")
+        if add_admin(args[2], name):
+            await message.reply("Successfully added admin")
         else:
-            await message.reply("File format is invalid")
-    else:
-        await message.reply(f"Failed to fetch file; code {response.status_code}")
+            await message.reply("Request failed")
+
+    elif args[1] == "remove_admin":
+        if len(args) > 2:
+            if remove_admin(args[2]):
+                await message.reply("Successfully removed admin")
+            else:
+                await message.reply("Request failed")
+        else:
+            await message.reply("Please provide an ID to remove")
+            return
+
+    # ChatGPT. I still don't care
+    elif args[1] == "get_admin":
+        if len(args) > 2:
+            name_to_search = args[2].lower()
+
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://iidk.online/serverdata") as resp:
+                    if resp.status != 200:
+                        await message.reply("Failed to fetch server data")
+                        return
+
+                    data = await resp.json()
+
+            # Get admin list
+            admins = data.get("admins", [])
+
+            # Find matching admins by name
+            matching_entries = [admin for admin in admins if admin["name"].lower() == name_to_search]
+
+            if matching_entries:
+                ids = [admin["user-id"] for admin in matching_entries]
+                await message.reply(f"{name_to_search} has {len(ids)} account(s): {', '.join(ids)}")
+            else:
+                await message.reply(f"No accounts found for {name_to_search}")
+            return
+        else:
+            await message.reply("Please provide a name to search for")
+            return
 
 async def handleBlacklist(message, args):
     if (len(args) >= 2):
@@ -3473,6 +3445,28 @@ def sendnotification(message, time):
     else:
         print(f"Failed to send notification: {response.status_code}")
         return "Failed to send notification"
+    
+def add_admin(idd, name):
+    url = "https://iidk.online/addadmin"
+    body = {"key": authenticationkey, "name": name, "id": idd}
+    
+    response = requests.post(url, json=body, timeout=5)
+    if response.status_code == 200:
+        return True
+    else:
+        print(f"Failed to add admin: {response.status_code}")
+        return False
+    
+def remove_admin(idd):
+    url = "https://iidk.online/removeadmin"
+    body = {"key": authenticationkey,"id": idd}
+    
+    response = requests.post(url, json=body, timeout=5)
+    if response.status_code == 200:
+        return True
+    else:
+        print(f"Failed to add admin: {response.status_code}")
+        return False
     
 def inviteall(room):
     url = "https://iidk.online/inviteall"
