@@ -2112,10 +2112,10 @@ Content
             
             response = requests.post(url, json=body, timeout=5)
             if response.status_code == 200:
-                message.reply("I did it are you proud of me")
+                await message.reply("I did it are you proud of me")
             else:
                 print(f"Failed to pollify: {response.status_code}")
-                message.reply("Yeah fuck you")
+                await message.reply("Yeah fuck you")
 
         if args[0] == "blacklist" and message.author.id == ownerUID:
             await handleBlacklist(message, args)
