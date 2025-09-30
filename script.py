@@ -952,6 +952,44 @@ The **consensus among most experts** is that if **90%+** of the results of an on
             except requests.exceptions.Timeout:
                 await message.reply("Request timed out")
 
+        if args[0] == "pollresults":
+            try:
+                response = requests.get("https://iidk.online/votes", timeout=5)
+                response.raise_for_status()
+                data = response.json()
+
+                response2 = requests.get("https://iidk.online/serverdata", timeout=5)
+                response2.raise_for_status()
+                serverdata = response2.json() 
+
+                optiona = serverdata.get('option-a', "Option A")
+                optionb = serverdata.get('option-b', "Option B")
+                poll = serverdata.get('poll', "Poll")
+
+                avotes = data.get('a-votes', 0)
+                bvotes = data.get('b-votes', 0)
+
+                total = avotes + bvotes
+
+                if total > 0:
+                    a_percent = avotes / total * 100
+                    b_percent = bvotes / total * 100
+                    result = (
+                        f"# {poll}\n"
+                        f"Total Votes: {total}\n\n"
+                        f"{optiona}: {a_percent:.2f}%\n"
+                        f"{optionb}: {b_percent:.2f}%"
+                    )
+                else:
+                    result = "No votes yet."
+
+                await message.reply(result)
+
+            except requests.exceptions.Timeout:
+                await message.reply("Request timed out while fetching poll results.")
+            except requests.exceptions.RequestException as e:
+                await message.reply(f"Unable to fetch poll results: {e}")
+
         if args[0] == "peakcount":
             with open("peakcount.txt", 'r') as file:
                 await message.reply(f"Peak user count: {file.read().strip()}")
@@ -2159,6 +2197,44 @@ Content
                 await message.reply("Unable to fetch menu user count")
             except requests.exceptions.Timeout:
                 await message.reply("Request timed out")
+
+        if args[0] == "pollresults":
+            try:
+                response = requests.get("https://iidk.online/votes", timeout=5)
+                response.raise_for_status()
+                data = response.json()
+
+                response2 = requests.get("https://iidk.online/serverdata", timeout=5)
+                response2.raise_for_status()
+                serverdata = response2.json()  # <- fixed, was using response.json()
+
+                optiona = serverdata.get('option-a', "Option A")
+                optionb = serverdata.get('option-b', "Option B")
+                poll = serverdata.get('poll', "Poll")
+
+                avotes = data.get('a-votes', 0)
+                bvotes = data.get('b-votes', 0)
+
+                total = avotes + bvotes
+
+                if total > 0:
+                    a_percent = avotes / total * 100
+                    b_percent = bvotes / total * 100
+                    result = (
+                        f"# {poll}\n"
+                        f"Total Votes: {total}\n\n"
+                        f"{optiona}: {a_percent:.2f}%\n"
+                        f"{optionb}: {b_percent:.2f}%"
+                    )
+                else:
+                    result = "No votes yet."
+
+                await message.reply(result)
+
+            except requests.exceptions.Timeout:
+                await message.reply("Request timed out while fetching poll results.")
+            except requests.exceptions.RequestException as e:
+                await message.reply(f"Unable to fetch poll results: {e}")
 
         if args[0] == "peakcount":
             with open("peakcount.txt", 'r') as file:
