@@ -261,10 +261,10 @@ async def my_background_task():
                     await client.get_channel(1170093288989147329).send('Restarting script, please wait...')
                     os.system("sudo systemctl restart iibot")
 
-            elapsed_time_ms = math.floor((time.time() - start_time) * 1000)
-            if elapsed_time_ms > 86400000:
-                await client.get_channel(1170093288989147329).send('Bot is restarting, please wait...')
-                os.system("sudo reboot")
+            # elapsed_time_ms = math.floor((time.time() - start_time) * 1000)
+            # if elapsed_time_ms > 86400000:
+                # await client.get_channel(1170093288989147329).send('Bot is restarting, please wait...')
+                # os.system("sudo reboot")
         except:
             print("Error")
 
