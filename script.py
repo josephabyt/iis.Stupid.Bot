@@ -1007,7 +1007,7 @@ The **consensus among most experts** is that if **90%+** of the results of an on
         if args[0] == "invite" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050):
             await message.reply(inviteall(args[1].upper()))
 
-        if args[0] == "inviterandom" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050):
+        if args[0] == "inviterandom" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050 or message.author.id == 252548095244500994):
             await message.reply(inviterandom(args[1].upper(), int(args[2])))
 
         if args[0] == "notify" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050):
@@ -1756,7 +1756,7 @@ async def handleCommand(message):
         if args[0] == "invite" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050):
             await message.reply(inviteall(args[1].upper()))
 
-        if args[0] == "inviterandom" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050):
+        if args[0] == "inviterandom" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050 or message.author.id == 252548095244500994):
             await message.reply(inviterandom(args[1].upper(), int(args[2])))
 
         if args[0] == "notify" and (message.author.name == ownerUsername or message.author.name == smUsername or message.author.id == 738573735895892050):
